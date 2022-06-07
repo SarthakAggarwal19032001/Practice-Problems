@@ -1,0 +1,45 @@
+class Solution {
+    public int nextGreaterElement(int n) {
+        
+        char[] num = Integer.toString(n).toCharArray();
+        
+		// Find rightmost digit which has a digit greater than itself on it's right
+        char max = '0';
+        boolean possible = false;
+        int i = 0;
+        for(i = num.length - 1; i >= 0; i--){
+            if(max > num[i]){
+                possible = true;
+                break;
+            }
+            if(num[i] > max)
+                max = num[i];
+        }
+        
+        if(!possible){
+		// If you cannot find any such digit then no answer is possible.
+            return -1;
+        }
+        
+        int ans = -1;
+        
+		//Find smallest digit to right greater than the number itself.
+        for(int j = i + 1; j < num.length; j++){
+            if(num[j] > num[i]){
+                if(ans == -1 || num[j] < num[ans])
+                    ans = j;
+            }
+        }
+        
+		//swap
+        char temp = num[i];
+        num[i] = num[ans];
+        num[ans] = temp;
+		
+		//Sort the remaining digits to the right to get the smallest number possible
+        Arrays.sort(num, i+1, num.length);
+		
+        long val = Long.parseLong(new String(num));
+        return val > Integer.MAX_VALUE ? -1 : (int)val ;
+    }
+}
