@@ -1,0 +1,24 @@
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int e_f = 0;//existing gas
+        int r_f = 0;//remaining gas
+        for(int i:gas)
+            e_f+=i;
+         for(int i:cost)
+            r_f+=i;
+        if(e_f<r_f)
+            return -1;
+        
+        int start = 0;
+        int travel =0;
+        for(int i =0;i<gas.length;i++){
+            travel=travel+(gas[i]-cost[i]);
+            if(travel<0){
+                travel =0;
+                start =i+1;
+            }
+        }
+        return start;
+        
+    }
+}
