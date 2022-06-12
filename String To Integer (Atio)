@@ -21,9 +21,6 @@ class Solution {
                 if(result>Integer.MAX_VALUE/10 ||(result==Integer.MAX_VALUE/10 && digit>Integer.MAX_VALUE%10)){
                     return sign==-1?Integer.MIN_VALUE:Integer.MAX_VALUE;
                 }
-                if(result<=Integer.MIN_VALUE/10){
-                    return Integer.MIN_VALUE;
-                }
                 result=result*10+digit;
             i++;
         }
