@@ -1,0 +1,39 @@
+import java.util.HashMap;
+import java.util.Stack;
+
+public class ValidParentheses {
+    static public  boolean isValid(String s){
+        if(s.length() % 2 != 0)
+            return false;
+        HashMap<Character,Character>map=new HashMap<>();
+        map.put(']', '[');
+        map.put(')', '(');
+        map.put('}', '{');
+        Stack<Character>stack=new Stack<>();
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            if(map.containsKey(ch)){
+                if(stack.isEmpty()){
+                    return false;
+                }
+                // if it is closing then pop opening from stack
+                else{
+                    char poped=stack.pop();
+                    if(poped!=map.get(ch)){
+                        return false;
+                    }
+                }
+            }
+            else{
+                // if it is openeing than push in stack
+                stack.push(ch);
+            }
+        }
+       return  stack.isEmpty();
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(isValid("(){}[]"));
+    }
+}
