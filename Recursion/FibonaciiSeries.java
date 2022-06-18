@@ -11,9 +11,18 @@ public class FibonaciiSeries {
         System.out.print(","+sum);
         fibo(n, i, j);
     }
+// Apporach 2-------------------------------------------------------------------------------------------------------------------------
+    static int  fibo(int n){// returns sum;
+        if(n<=1){
+            return n;
+        }
+        return fibo(n-1)+fibo(n-2);
+
+    }
     public static void main(String[] args) {
-        int n=3;
-            System.out.print(0+","+1);
-        fibo(n-2,0,1);
+        int n=5;
+            //System.out.print(0+","+1);
+        //fibo(n-2,0,1);
+        System.out.println(fibo(n));
     }
 }
