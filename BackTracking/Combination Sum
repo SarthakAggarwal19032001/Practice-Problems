@@ -1,0 +1,40 @@
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        
+        List<List<Integer>> result = new ArrayList<>();
+        
+        checkCombinationSum(candidates, target, -1, result, new ArrayList<>());
+        
+        return result;
+    }
+    
+    void checkCombinationSum(int[] candidates, int remain, int lastVal, List<List<Integer>> result, List<Integer> currentList){
+        if(remain == 0){
+            /* Put a deep copy. */
+            List<Integer> res = new ArrayList<>(currentList);
+            result.add(res);
+            return;
+        }
+        
+        else if (remain < 0){
+            return;
+        }
+        
+        
+        for(int can : candidates){
+            if(can < lastVal)
+                continue;
+            int newRemain = remain - can;
+            if(newRemain < 0)
+                continue;
+            // Add the current value
+            currentList.add(can);
+            
+            // Evaluate the current list
+            checkCombinationSum(candidates, newRemain, can, result, currentList);
+                
+            // Remove the current value
+            currentList.remove(currentList.size()-1);
+        }
+    }
+}
