@@ -12,7 +12,7 @@ class KnapSack{
                     matrix[i][j]=matrix[i-1][j];
                 }
                 else{
-                    matrix[i][j]=Math.max(prices[i-1]+matrix[i-1][j-weights[i-1]], matrix[i-1][j-1]);
+                    matrix[i][j]=Math.max(prices[i-1]+matrix[i-1][j-weights[i-1]], matrix[i-1][j]);
                 }
             }
         }
