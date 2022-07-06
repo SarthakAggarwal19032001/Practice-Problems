@@ -1,0 +1,141 @@
+public class MyLinkedList{
+
+    Node head;
+    Node tail;
+
+    public MyLinkedList(){
+        this.head = null;
+        this.tail = null;
+    }
+
+    class Node{
+        int val;
+        Node next;
+        Node prev;
+
+        public Node(int x) {
+            this.val = x;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+
+    public int get(int index) {
+        if (index == 0) {
+            if (this.head != null) return this.head.val;
+            return -1;
+        }
+        Node iNode = getNode(index);
+        if (iNode == null) return -1;
+        return iNode.val;
+    }
+
+    public Node getNode(int index) {
+        if (index == 0) return this.head;
+
+        Node itNode = this.head;
+        int counter = 1;
+        while(itNode.next != null) {
+            if (counter == index) return itNode.next;
+            itNode = itNode.next;
+            counter++;
+        }
+
+        return null;
+    }
+
+    public void addAtHead(int val) {
+        Node nodeToInsert = new Node(val);
+        if (this.head == null) {
+            this.head = nodeToInsert;
+            this.tail = nodeToInsert;
+        }
+        else{
+            nodeToInsert.next = this.head;
+            this.head = nodeToInsert;
+        }
+        return;
+    }
+
+    public void addAtTail(int val) {
+        Node nodeToInsert = new Node(val);
+        if (this.head == null) {
+            this.head = nodeToInsert;
+            this.tail = nodeToInsert;
+        }
+        else{
+            this.tail.next = nodeToInsert;
+            nodeToInsert.prev  = this.tail;
+            this.tail = nodeToInsert;
+        }
+        return;
+    }
+
+    public void addAtIndex(int index, int val) {
+        if (index == 0) addAtHead(val);
+        Node nodeToInsert = new Node(val);
+        Node prevToIndex = getNode(index - 1);
+
+        if (prevToIndex == null) return;
+        if (this.tail == prevToIndex) {
+            nodeToInsert.prev = prevToIndex;
+            prevToIndex.next = nodeToInsert;
+            this.tail = nodeToInsert;
+        }
+        else {
+            nodeToInsert.next = prevToIndex.next;
+            prevToIndex.next.prev = nodeToInsert;
+            nodeToInsert.prev = prevToIndex;
+            prevToIndex.next = nodeToInsert;
+        }
+        return;
+    }
+
+    public void deleteAtIndex(int index) {
+        if (index == 0) {
+            if (this.head == null) return;
+
+            if (this.head == this.tail) {
+                this.head = null;
+                this.tail = null;
+            }
+            else {
+                Node temp = this.head.next;
+                temp.prev = null;
+                this.head.next = null;
+                this.head = temp;
+            }
+            return;
+        }
+
+        Node prevToIndex = getNode(index - 1);
+        if (prevToIndex == null) return;
+        if (prevToIndex.next != null) {
+            if (this.tail == prevToIndex) return;
+            if (this.tail == prevToIndex.next) {
+                prevToIndex.next = null;
+                this.tail = prevToIndex;
+            }
+            else {
+                prevToIndex.next = prevToIndex.next.next;
+                if (prevToIndex.next.next != null)
+                    prevToIndex.next.next.prev = prevToIndex;
+            }
+        }
+        return;
+    }
+
+    public void traverse() {
+        Node travNode = this.head;
+        if (travNode != null) {
+            System.out.print(travNode.val + " -> ");
+            while (travNode.next != null) {
+                travNode = travNode.next;
+                System.out.print(travNode.val + " -> ");
+            }
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+
+}
