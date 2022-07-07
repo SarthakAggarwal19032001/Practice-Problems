@@ -1,0 +1,69 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    // static ListNode getnode(int v,ListNode temp){
+    //     for(int i=1;i<=v;i++){
+    //         temp=temp.next;
+    //     }
+    //     return temp;
+    // }
+    // public ListNode1 reverseList(ListNode head) {
+    //     if(head==null){
+    //         return null;
+    //     }
+    //     else if(head.next==null){
+    //         return head;
+    //     }
+    //     else{
+    //         ListNode temp=head;
+    //         int j=0;
+    //         while(temp.next!=null){
+    //             temp=temp.next;
+    //             j++;
+    //         }
+    //         int i=0;
+    //         while(i<j){
+    //             ListNode ith=getnode(i,head);
+    //             ListNode jth=getnode(j,head);
+    //             int t=ith.val;
+    //             ith.val=jth.val;
+    //             jth.val=t;
+    //             i++;
+    //             j--;
+    //         }
+    //     }
+    //     return head;
+    // }
+    
+    //Three Pointer Approach
+    public ListNode reverseList(ListNode head) {
+         if(head==null){
+            return null;
+        }
+        else if(head.next==null){
+            return head;
+        }
+        else{
+        ListNode prev=head;
+        ListNode current=prev.next;
+        while(current!=null){
+            ListNode ahead=current.next;
+            current.next=prev;
+            prev=current;
+            current=ahead;
+        }
+        ListNode temp=head;
+        head=prev;
+        temp.next=null;
+        return head;
+        }
+    }
+}
