@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+//1. Find the mid elemnt 
+//2. divide the list into two halves
+//3. Reverse the second half and compare
+class Solution {
+    ListNode m=null;
+    private ListNode reverse(ListNode head){
+        if(head.next==null){
+            return head;
+        }
+        ListNode prev=head;
+        ListNode current=prev.next;
+        while(current!=null){
+            ListNode ahead=current.next;
+            current.next=prev;
+            prev=current;
+            current=ahead;
+        }
+        return prev;
+    }
+   private ListNode mid(ListNode head){
+        ListNode slow,fast;
+        slow=fast=head;
+       //even case
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+       m=slow;
+       //odd length condition
+       if(fast!=null){
+        return slow.next;
+       }
+       return slow;
+    }
+    public boolean isPalindrome(ListNode head) {
+        if(head==null){
+            return false;
+        }
+        else if(head.next==null){
+            return true;
+        }
+        else if(head.next.next==null){
+            if(head.val==head.next.val){
+                return true;
+            }
+            return false;
+        }
+        ListNode middle=mid(head);
+        ListNode rev=reverse(middle);
+        ListNode temp=head;
+        while(temp!=m){
+            if(temp.val==rev.val){
+                temp=temp.next;
+                rev=rev.next;
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
+}
