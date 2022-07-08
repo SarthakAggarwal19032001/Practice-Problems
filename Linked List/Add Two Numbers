@@ -1,0 +1,117 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    ListNode head=null;
+    private void addatEnd(int data){
+        ListNode node=new ListNode(data);
+        if(head==null){
+            head=node;
+        }
+        else{
+            ListNode temp=head;
+        while(temp.next!=null){
+            temp=temp.next;
+        }
+        temp.next=node;
+    }
+    }
+        
+       private void addatEnd(ListNode l1,int data){
+        ListNode node=new ListNode(data);
+            ListNode temp=l1;
+        while(temp.next!=null){
+            temp=temp.next;
+        }
+        temp.next=node;
+         
+    }
+    
+    private int length(ListNode l){
+        int j=0;
+        while(l!=null){
+            l=l.next;
+            j++;
+        }
+        return j;
+    }
+    private void equallen(ListNode l1,int len1,int len2){
+        int diff=len2-len1;
+        for(int i=0;i<diff;i++){
+            addatEnd(l1,0);
+        }
+    }
+           
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if(l1==null && l2==null){
+            return null;
+        }
+        if(l1==null){
+            return l2;
+        }
+        else if(l2==null){
+            return l1;
+        }
+        int lenl1=length(l1);
+        int lenl2=length(l2);
+        if(lenl1<lenl2){
+            equallen(l1,lenl1,lenl2);
+        }
+        ListNode carry=new ListNode(0);
+        ListNode u=l1;
+        ListNode l=l2;
+        while(u!=null || l!=null){
+            if(l==null){
+            int sum=u.val+carry.val;
+                carry.val=0;
+            if(sum>9){
+                carry.val=sum/10;
+                int a=sum%10;
+                addatEnd(a);
+            }
+            else{
+                addatEnd(sum);
+            } 
+               u= u.next;
+            }
+            else if(u==null){
+            int sum=l.val+carry.val;
+                carry.val=0;
+            if(sum>9){
+                carry.val=sum/10;
+                int a=sum%10;
+                addatEnd(a);
+            }
+            else{
+                addatEnd(sum);
+            } 
+                l=l.next;
+            }
+            else{
+            int sum=u.val+l.val+carry.val;
+                carry.val=0;
+            if(sum>9){
+                carry.val=sum/10;
+                int a=sum%10;
+                addatEnd(a);
+            }
+            else{
+                addatEnd(sum);
+            }
+            u=u.next;
+            l=l.next;
+            }
+        }
+        if(carry.val!=0){
+           addatEnd(carry.val); 
+        }
+        return head;
+    }
+}
