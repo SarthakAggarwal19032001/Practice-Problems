@@ -1,0 +1,70 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+// public class Solution {
+//     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+//         if(headA==null || headB==null){
+//             return null;
+//         }
+//         ListNode temp1=headA;
+//         while(temp1!=null){
+//             ListNode temp2=headB;
+//             while(temp2!=null){
+//                 if(temp1==temp2){
+//                     return temp1;
+//                 }
+//                 if(temp1.next==temp2.next){
+//                     return temp2.next;
+//                 }
+//                 temp2=temp2.next;
+//             }
+//             temp1=temp1.next;
+//         }
+//         return null;
+//     }
+// }
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB){
+      int l1 = 0;
+      int l2 = 0;
+      ListNode head1 = headA;
+        ListNode head2 = headB;
+      while(head1 != null){
+          l1++;
+          head1 = head1.next;
+      }
+      while(head2 != null){
+         l2++;
+          head2 = head2.next;
+      }
+      if(l1 > l2){
+          int inc = l1 - l2;
+          for(int i = 0; i < inc; i++){
+              headA = headA.next;
+          }
+      }
+      else if(l2 > l1){
+          int inc = l2 - l1;
+          for(int i = 0; i < inc; i++){
+              headB = headB.next;
+          }
+      }
+      while(headA != null && headB != null){
+          if(headA == headB){
+              return headA;
+          }
+          headA = headA.next;
+          headB = headB.next;
+      }
+        return null;
+    }
+  
+}
