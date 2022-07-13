@@ -1,0 +1,49 @@
+class Solution {
+public int largestRectangleArea(int[] heights) {
+int[] pse = prevSmalEle(heights);
+int[] nse = nextSmalEle(heights);
+
+    int max = Integer.MIN_VALUE;
+    
+    for(int i = 0; i < heights.length; i++)
+        max = Math.max((nse[i] - pse[i] - 1) * heights[i], max);
+    
+   
+    
+    return max;
+}
+
+int[] prevSmalEle(int[] arr){
+    Stack<Integer> st = new Stack<>();
+    int[] ans = new int[arr.length];
+    
+    for(int i = 0; i < arr.length; i++){
+        while(!st.isEmpty() && arr[st.peek()] >= arr[i])
+            st.pop();
+        
+        if(st.isEmpty()) 
+            ans[i] = -1;
+        else
+            ans[i] = st.peek();
+        st.push(i);
+    }
+    return ans;
+}
+
+int[] nextSmalEle(int[] arr){
+    Stack<Integer> st = new Stack<>();
+    int[] ans = new int[arr.length];
+    
+    for(int i = arr.length - 1; i >= 0; i--){
+        while(!st.isEmpty() && arr[st.peek()] >= arr[i])
+            st.pop();
+        
+        if(st.isEmpty()) 
+            ans[i] = arr.length;
+        else
+            ans[i] = st.peek();
+        st.push(i);
+    }
+    return ans;
+}
+}
