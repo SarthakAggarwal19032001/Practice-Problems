@@ -19,14 +19,16 @@ class operations{
         }
     }
 
-    void dequeue(){
+    int dequeue(){
         if(front==null){
             throw new RuntimeException("Empty Queue.....................................");
         }
+        int a=front.data;
         front=front.next;
         if(front==null){
             rear=null;
         }
+        return a;
     }
 
     void print(){
