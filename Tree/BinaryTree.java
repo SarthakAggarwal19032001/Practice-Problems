@@ -58,6 +58,7 @@ class Operations{
     }
 
     void iterativePreOrder(BinaryTree currnode){
+        System.out.println("Through Iterative PreOrder");
        if(currnode==null){
         return;
        }
@@ -88,23 +89,61 @@ class Operations{
     }
 
     void iterativePostorder(BinaryTree currnode){
+        System.out.println("Through Iterative PostOrder");
         Stack<BinaryTree>stack=new Stack<>();
         BinaryTree temp=currnode;
-        while(true){
+        while(temp!=null || !stack.isEmpty()){
             while(temp!=null){
-                stack.push(temp);
-                stack.push(temp);
-                temp=temp.left;
-            }
-            temp=stack.pop();
-            if(!stack.isEmpty() && stack.peek()==temp)
+            stack.push(temp);
+            stack.push(temp);
+            temp=temp.left;
+        }
+        temp=stack.pop();
+        if(!stack.isEmpty() && temp==stack.peek()){
             temp=temp.right;
-            else{
-                System.out.println(temp.data);
-                temp=null;
-            }
+        }
+        else{
+            System.out.println(temp.data);
+            temp=null;
         }
     }
+
+}
+        // ArrayList<Integer>list=new ArrayList<>();
+        // stack.push(currnode);
+        // while(!stack.isEmpty()){
+        //     BinaryTree node=stack.pop();
+        //     list.add(node.data);
+        //     if(node.left!=null){
+        //         stack.push(node.left);
+        //     }
+        //     if(node.right!=null){
+        //         stack.push(node.right);
+        //     }
+        // }
+        // Collections.reverse(list);
+        // System.out.println("Through Iterative PostOrder");
+        // System.out.println(list);
+    
+
+        // BinaryTree temp=currnode;
+        // while(true){
+        //     while(temp!=null){
+        //         stack.push(temp);
+        //         stack.push(temp);
+        //         temp=temp.left;
+        //     }
+        // if(stack.isEmpty()){
+        //     return;
+        // }
+        //     temp=stack.pop();
+        //     if(!stack.isEmpty() && stack.peek()==temp)
+        //     temp=temp.right;
+        //     else{
+        //         System.out.println(temp.data);
+        //         temp=null;
+        //     }
+        // }
 
     //Left->Parent->Right
     void inorder(BinaryTree currnode){
@@ -115,8 +154,49 @@ class Operations{
         System.out.println(currnode.data);
         inorder(currnode.right);
     }
+
+    void iterativeInorder(BinaryTree currnode){
+        System.out.println("Through Iterative Inorder");
+        BinaryTree temp=currnode;
+        Stack<BinaryTree>stack=new Stack<>();
+        while(temp!=null || !stack.isEmpty()){    //TC- O(N)
+            while(temp!=null){
+                stack.push(temp);
+                temp=temp.left;
+            }
+            temp=stack.pop();
+            System.out.println(temp.data);
+            temp=temp.right;
+        }
+        // while(true){
+        //     while(temp!=null){
+        //         stack.push(temp);
+        //         stack.push(temp);
+        //         temp=temp.left;
+        //     }
+        //     if(stack.isEmpty()){
+        //         return;
+        //     }
+        //     temp=stack.pop();
+        //     if(!stack.isEmpty() && stack.peek()==temp){
+        //         System.out.println(temp.data);
+        //         temp=temp.right;
+        //     }
+        //     else{
+        //         temp=null;
+        //     }
+        // }
+    }
     public static void main(String[] args) {
         Operations op=new Operations();
-        op.print(op.insert());
+        BinaryTree bt=op.insert();
+        op.preorder(bt);
+        op.iterativePreOrder(bt);
+        System.out.println("------------------------------------------------------------------------");
+        op.inorder(bt);
+        op.iterativeInorder(bt);
+        System.out.println("------------------------------------------------------------------------");
+        op.postorder(bt);
+        op.iterativePostorder(bt);
     }
 }
