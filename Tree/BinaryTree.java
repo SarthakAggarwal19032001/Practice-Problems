@@ -1,5 +1,10 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.TreeMap;
 class BinaryTree{
     int data;
     BinaryTree left;
@@ -187,6 +192,299 @@ class Operations{
         //     }
         // }
     }
+
+
+
+
+
+
+// Breadth First Search Traversal...............................
+//Also called level order traversal or Horizontal Traversal
+
+//Through Recursion----------------
+    void levelordertrav(BinaryTree currnode){
+    Queue<BinaryTree>queue=new LinkedList<>();
+    queue.offer(currnode);
+    while(!queue.isEmpty()){
+        int count=queue.size();
+        for(int i=0;i<count;i++){
+        BinaryTree node=queue.poll();
+        System.out.print(node.data+" ");
+        if(node.left!=null)
+        queue.offer(node.left);
+        if(node.right!=null)
+        queue.offer(node.right);
+        }
+        System.out.println();
+    }
+}
+
+
+int height(BinaryTree root){
+    if(root==null){
+        return 0;
+    }
+    int leftheight=height(root.left);
+    int rightheight=height(root.right);
+    return 1+Math.max(leftheight, rightheight);
+}
+
+
+int heightIterative(BinaryTree root){
+    Queue<BinaryTree>queue=new LinkedList<>();
+    queue.offer(root);
+    int height=0;
+    while(!queue.isEmpty()){
+        height++;
+        int count=queue.size();
+        for(int i=0;i<count;i++){
+        BinaryTree node=queue.poll();
+        if(node.left!=null)
+        queue.offer(node.left);
+        if(node.right!=null)
+        queue.offer(node.right);
+        }
+    }
+    return height;
+}
+
+int maxelemnet(BinaryTree root){
+    Queue<BinaryTree>queue=new LinkedList<>();
+    queue.offer(root);
+    int max=0;
+    while(!queue.isEmpty()){
+        int count=queue.size();
+        for(int i=0;i<count;i++){
+        BinaryTree node=queue.poll();
+        if(node.data>max){
+            max=node.data;
+        }
+        if(node.left!=null)
+        queue.offer(node.left);
+        if(node.right!=null)
+        queue.offer(node.right);
+        }
+    }
+    return max;
+}
+
+
+int minelemnet(BinaryTree root){
+    Queue<BinaryTree>queue=new LinkedList<>();
+    queue.offer(root);
+    int min=Integer.MAX_VALUE;
+    while(!queue.isEmpty()){
+        int count=queue.size();
+        for(int i=0;i<count;i++){
+        BinaryTree node=queue.poll();
+        if(node.data<min){
+            min=node.data;
+        }
+        if(node.left!=null)
+        queue.offer(node.left);
+        if(node.right!=null)
+        queue.offer(node.right);
+        }
+    }
+    return min;
+}
+
+
+
+void printleafs(BinaryTree currnode){
+    if(currnode==null){
+        return;
+    }
+    if(currnode.left==null && currnode.right==null){
+        System.out.print(currnode.data+" ");
+        return;
+    }
+    printleafs(currnode.left);
+    printleafs(currnode.right);
+
+}
+
+
+int SumOfLeaf(BinaryTree root){
+    Stack<BinaryTree>stack=new Stack<>();
+    stack.push(root);
+    int sum=0;
+    while(!stack.isEmpty()){
+        BinaryTree node=stack.pop();
+        if(node.right==null && node.left==null){
+            sum=sum+node.data;
+        }
+        else{
+        if(node.right!=null){
+            stack.push(node.right);
+        }
+        if(node.left!=null){
+            stack.push(node.left);
+        }
+    }
+    }
+    return sum;
+
+}
+
+
+
+int  countNodes(BinaryTree root){
+        Queue<BinaryTree>queue=new LinkedList<>();
+        queue.offer(root);
+        int c=0;
+        while(!queue.isEmpty()){
+            BinaryTree node=queue.poll();
+            c++;
+            if(node.left!=null){
+                queue.offer(node.left);
+            }
+            if(node.right!=null){
+                queue.offer(node.right);
+            }
+        }
+        return c;
+}
+
+void leftview(BinaryTree root){
+    Queue<BinaryTree>queue=new LinkedList<>();
+    queue.offer(root);
+    while(!queue.isEmpty()){
+        int count=queue.size();
+        for(int i=0;i<count;i++){
+        BinaryTree node=queue.poll();
+        if(i==0)
+        System.out.print(node.data);
+        if(node.left!=null)
+        queue.offer(node.left);
+        if(node.right!=null)
+        queue.offer(node.right);
+        }
+        System.out.println();
+    }
+}
+
+int maxlevel=0;
+void leftviewRecursion(BinaryTree currnode,int level){
+    if(currnode==null){
+        return;
+    }
+    if(maxlevel<level){
+        System.out.println(currnode.data);
+        maxlevel=level;
+    }
+    leftviewRecursion(currnode.left,level+1);
+    leftviewRecursion(currnode.right, level+1);
+}
+
+
+void rightview(BinaryTree root){
+    Queue<BinaryTree>queue=new LinkedList<>();
+    queue.offer(root);
+    while(!queue.isEmpty()){
+        int count=queue.size();
+        for(int i=0;i<count;i++){
+        BinaryTree node=queue.poll();
+        if(i+1==count)
+        System.out.print(node.data);
+        if(node.left!=null)
+        queue.offer(node.left);
+        if(node.right!=null)
+        queue.offer(node.right);
+        }
+        System.out.println();
+    }
+}
+
+
+
+int mlevel=0;
+void rightviewRecursion(BinaryTree currnode,int level){
+    if(currnode==null){
+        return ;
+    }
+    if(mlevel<level){
+        System.out.println(currnode.data);
+        mlevel=level;
+    }
+    rightviewRecursion(currnode.right, level+1);
+    rightviewRecursion(currnode.left,level+1);
+}
+
+
+void VerticalOrder(BinaryTree root){
+    TreeMap<Integer,ArrayList<Integer>>map=new TreeMap<>();   //key Wise sorting
+    int distance=0;
+    VeticalOrderHelper(root,map,distance);
+    for(Map.Entry<Integer,ArrayList<Integer>>m:map.entrySet()){
+        System.out.println(m.getKey()+"->"+m.getValue());
+    }
+}
+void VeticalOrderHelper(BinaryTree currnode,TreeMap<Integer,ArrayList<Integer>> map,int currdistance){
+    //Termination case
+    if(currnode==null){
+        return;
+    }
+    //if it doesn't contains the key
+    if(map.get(currdistance)==null){
+        ArrayList<Integer>list=new ArrayList<>();
+        list.add(currnode.data);
+        map.put(currdistance, list);
+    }
+    //if it contains a key
+    else{
+        ArrayList<Integer>list=map.get(currdistance);
+        list.add(currnode.data);
+        map.put(currdistance, list);
+    }
+    VeticalOrderHelper(currnode.left, map, currdistance-1);
+    VeticalOrderHelper(currnode.right, map, currdistance+1);
+}
+
+void VerticalIterative(BinaryTree root){
+    Stack<BinaryTree>stack=new Stack<>();
+    TreeMap<Integer,ArrayList<Integer>>map=new TreeMap<>();
+    stack.push(root);
+    int distance=0;
+    while(!stack.isEmpty()){
+        BinaryTree node=stack.pop();
+        if(map.get(distance)==null){
+            ArrayList<Integer>list=new ArrayList<>();
+            list.add(node.data);
+            map.put(distance, list);
+        }
+        else{
+            ArrayList<Integer>list=map.get(distance);
+            list.add(node.data);
+            map.put(distance, list);
+        }
+        if(node.left==null && node.right==null){
+            distance=distance+1;
+            if(distance==0 || distance==1){
+                distance=distance+1;
+            }
+    }
+        else{
+            if(node.right!=null){
+                stack.push(node.right);
+                distance=distance+1;
+            }
+            if(node.left!=null && node.right!=null){
+                stack.push(node.left);
+                distance=distance-2;
+            }
+            else if(node.left!=null && node.right==null){
+                stack.push(node.left);
+                distance=distance-1;
+            }
+        }
+    }
+    for(Map.Entry<Integer,ArrayList<Integer>>m:map.entrySet()){
+        System.out.println(m.getKey()+"->"+m.getValue());
+    }
+    }
+
+
     public static void main(String[] args) {
         Operations op=new Operations();
         BinaryTree bt=op.insert();
@@ -198,5 +496,35 @@ class Operations{
         System.out.println("------------------------------------------------------------------------");
         op.postorder(bt);
         op.iterativePostorder(bt);
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("Through BFT");
+        op.levelordertrav(bt);
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("Height of tree "+op.height(bt));
+        System.out.println("Number of Node in tree: "+op.countNodes(bt));
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("Left view......");
+        op.leftview(bt);
+        System.out.println("Through Recursion");
+        op.leftviewRecursion(bt, 1);
+        System.out.println("Right view......");
+        op.rightview(bt);
+        System.out.println("Through Recursion");
+        op.rightviewRecursion(bt, 1);
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("Maximum Element "+op.maxelemnet(bt));
+        System.out.println("Minimum Element "+op.minelemnet(bt));
+        System.out.println("Leaves Of Trees are....");
+        op.printleafs(bt);
+        System.out.println();
+        System.out.println("Sum Of Leaves..."+op.SumOfLeaf(bt));
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("Vertical order");
+        op.VerticalOrder(bt);
+        System.out.println("Vertical Order Iterative");
+        op.VerticalIterative(bt);
+        
+
+
     }
 }
