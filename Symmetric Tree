@@ -1,0 +1,23 @@
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        
+        TreeNode leftNode = root.left;
+        TreeNode rightNode = root.right;
+        
+        boolean ans =  Mirror(leftNode, rightNode);
+        return ans;
+ }
+    public boolean Mirror(TreeNode p, TreeNode q) {
+    
+     if(p == null || q == null){
+           return p==q;
+        }
+        
+        if(p.val != q.val){
+            return  false;
+           
+        }
+      return  Mirror(p.left, q.right) && Mirror(p.right, q.left);
+        
+    }
+}
