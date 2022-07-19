@@ -1,0 +1,43 @@
+//gfg
+
+class Solution
+{
+    //Function to check if two trees are identical.
+	boolean isIdentical(Node root1, Node root2)
+	{
+	    if(root1==null && root2==null){
+	        return true;
+	    }
+	    if(root1==null && root2!=null || root1!=null && root2==null){
+	        return false;
+	    }
+	    Queue<Node>q1=new LinkedList<>();
+	    Queue<Node>q2=new LinkedList<>();
+	    q1.offer(root1);
+	    q2.offer(root2);
+	    while(q1.size()!=0 && q2.size()!=0){
+	        Node node1=q1.poll();
+	        Node node2=q2.poll();
+	        if(node1.data!=node2.data){
+	            return false;
+	        }
+	        if(node1.left!=null && node2.left!=null){
+	            q1.offer(node1.left);
+	            q2.offer(node2.left);
+	        }
+	        else if(node1.left==null && node2.left!=null || node1.left!=null && node2.left==null){
+	            return false;
+	        }
+	        if(node1.right!=null && node2.right!=null){
+	            q1.offer(node1.right);
+	            q2.offer(node2.right);
+	        }
+	        else if(node1.right==null && node2.right!=null || node1.right!=null && node2.right==null){
+	            return false;
+	        }
+	    }
+	    return true;
+	    
+	}
+	
+}
