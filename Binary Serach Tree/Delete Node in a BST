@@ -1,0 +1,97 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root==null){
+            return null;
+        }
+        //delete root
+        else if(root.left==null && root.right==null && key==root.val){
+            return null;
+        }
+        else if(root.left==null && root.right!=null && key==root.val){
+            root=root.right;
+        }
+        else if(root.left!=null && root.right==null && key==root.val){
+            root=root.left;
+        }
+        delete(root,root,true,key);
+        return root;
+    }
+    
+    
+    void delete(TreeNode currnode,TreeNode parent,boolean isleft,int key){
+        if(currnode==null){
+            return;
+        }
+        if(key<currnode.val){
+            delete(currnode.left,currnode,true,key);
+        }
+        else if(key>currnode.val){
+            delete(currnode.right,currnode,false,key);
+        }
+        //if found
+        else if(key==currnode.val){
+            //case 1
+            if(currnode.left==null && currnode.right==null){
+                if(isleft){
+                    parent.left=null;
+                }
+                else{
+                    parent.right=null;
+                }
+            }
+            //case 2
+            else if(currnode.left==null && currnode.right!=null){
+                if(isleft){
+                    parent.left=currnode.right;
+                }
+                else{
+                    parent.right=currnode.right;
+                }
+            }
+            //case 3
+            else if(currnode.left!=null && currnode.right==null){
+                if(isleft){
+                    parent.left=currnode.left;
+                }
+                else{
+                    parent.right=currnode.left;
+                }
+            }
+            //case 4
+           else if(currnode.left!=null && currnode.right!=null){
+                //2 choices 1.find left max  or 2.find right min
+                
+                TreeNode leftmax=max(currnode.left);
+                int v=currnode.val;
+                currnode.val=leftmax.val;
+                leftmax.val=v;
+                delete(currnode.left,currnode,true,key);
+            }
+        }
+        }
+    
+    
+    TreeNode max(TreeNode currnode){
+        TreeNode max=currnode;
+        while(currnode!=null){
+             max=currnode;
+            currnode=currnode.right;
+        }
+        return max;
+    }
+}
