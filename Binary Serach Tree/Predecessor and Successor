@@ -1,0 +1,50 @@
+//gfg
+class GfG
+{
+    public static void findPreSuc(Node root, Res p, Res s, int key)
+    {
+         if(root==null)
+      return;
+      if(root.data==key)
+      {
+          if(root.left!=null)
+          p.pre = findPre(root);
+          
+          if(root.right!=null)
+          s.succ = findSuc(root);
+          return;
+      }
+      if(key>root.data)
+      {
+          p.pre = root;
+          findPreSuc(root.right,p,s,key);
+      }
+      else if(key<root.data)
+      {
+          s.succ=root;
+          findPreSuc(root.left,p,s,key);
+      }
+       
+     
+   }
+   
+   static Node findPre(Node root)
+   {
+       root=root.left;
+       while(root.right!=null)
+       {
+           root=root.right;
+       }
+       return root;
+   }
+   
+    static Node findSuc(Node root)
+   {
+     root=root.right;
+     while(root.left!=null)
+     {
+         root=root.left;
+     }
+     return root;
+   }
+}
