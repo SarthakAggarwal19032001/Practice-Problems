@@ -1,0 +1,28 @@
+//gfg
+class Solution {
+   // Function to return a list containing the DFS traversal of the graph.
+   ArrayList<Integer> list ;
+   void helper(boolean[] visited ,ArrayList<ArrayList<Integer>> adj,int source)
+   {
+       if(visited[source]==true)
+       {
+           return;
+       }
+       visited[source]=true;
+       list.add(source);
+       for(int i :adj.get(source))
+       {
+           if(visited[i]==false)
+               helper(visited,adj,i);
+       }
+   }
+   public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+       // Code here
+   
+       list =new ArrayList<Integer>();
+       boolean[] visited =new boolean[V];
+       helper(visited,adj,0);
+       return list;
+   }
+   
+}
