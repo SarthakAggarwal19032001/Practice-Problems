@@ -1,0 +1,64 @@
+class Solution {
+    
+    class Pair{
+        int x;
+        int y;
+        Pair(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+    }
+    
+    public int orangesRotting(int[][] grid) {
+        if(grid.length==0)
+            return 0;
+        int rows = grid.length;
+        int cols = grid[0].length;
+        
+        Queue<Pair> q = new LinkedList<>();    
+        int orangeCount = 0;   // total no. of oranges in grid
+        
+        // counting total no. of oranges in grid
+        // adding all the initial rotten oranges index in the queue
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                if(grid[i][j]==2) 
+                    q.add(new Pair(i, j));
+                if(grid[i][j]!=0) 
+                    orangeCount++;
+            }
+        }
+        
+        if(orangeCount==0) 
+            return 0;
+        int minute = 0;
+        int currOrangeCount = 0;  // stores count of total rotten oranges
+        
+        // 4 directions
+        int[] dx = {0, 0, 1, -1};
+        int[] dy = {1, -1, 0, 0};
+        
+        
+        while(!q.isEmpty()){
+            int size = q.size();
+            currOrangeCount+=size;
+            for(int i=0; i<size; i++){
+                Pair point = q.poll();
+                for(int j=0; j<4; j++){
+                    int x = point.x + dx[j];
+                    int y = point.y + dy[j];
+                    
+                    if(x<0 || y<0 || x>=rows || y>=cols || grid[x][y]!=1) 
+                        continue;
+                    grid[x][y]=2;
+                    q.add(new Pair(x, y));
+                }
+            }
+            if(q.size()!=0){
+                minute++;
+            }
+        }    
+        // if total no. of rotten oranges == total no.of oranges initially in grid then answer is minute
+        return currOrangeCount==orangeCount ? minute : -1;
+    }
+}
