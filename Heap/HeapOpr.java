@@ -32,6 +32,42 @@ class Heap{
       System.out.println(sorted);
      }
 
+
+     void MintoMax(){
+      for(int i=list.size()/2-1;i>=0;i--)
+      MaxdownHeapify(i);
+     }
+
+     void MaxdownHeapify(int parentIndex){
+      int lci=(2*parentIndex+1);
+      int rci=(2*parentIndex+2);
+      int maxIndex=parentIndex;
+      if(lci<list.size() && list.get(lci)>list.get(parentIndex)){
+       maxIndex=lci;
+      }
+      if(rci<list.size() && list.get(rci)>list.get(maxIndex)){
+       maxIndex=rci;
+   } 
+   if(parentIndex!=maxIndex){
+    swap(parentIndex, maxIndex);
+    downHeapify(maxIndex);
+   }
+ }
+
+
+ void MaxToMin(){
+   int n=list.size()-1;
+   while(n>=0){
+      upHeapify(n);
+      n--;
+   }
+ }
+
+ 
+     
+
+
+
      void sortdownheap(int parentIndex,int n){
       int minIndex=parentIndex;
       int lci=2*parentIndex+1;
@@ -58,7 +94,7 @@ class Heap{
         if(lci<list.size() && list.get(lci)<list.get(parentIndex)){
          minIndex=lci;
         }
-        if(rci<list.size() && list.get(rci)<list.get(parentIndex)){
+        if(rci<list.size() && list.get(rci)<list.get(minIndex)){
          minIndex=rci;
      } 
      if(parentIndex!=minIndex){
@@ -106,8 +142,11 @@ class HeapOpr{
       //   h.add(30);
         h.print();
       //   h.removeMin();
+      h.MintoMax();
         h.print();
-        h.Heapsort();
+        h.MaxToMin();
+        h.print();
+       // h.Heapsort();
 
       //   h.removeMin();
       //   h.print();
