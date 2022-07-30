@@ -1,0 +1,21 @@
+//gfg
+class Solution
+{
+    //Function to return the minimum cost of connecting the ropes.
+    long minCost(long arr[], int n) 
+    {
+        PriorityQueue<Long>heap=new PriorityQueue<>();
+        for(long a:arr){
+            heap.offer(a);
+        }
+        long sum=0;
+        while(heap.size()>1){
+            long min1=heap.poll();
+            long min2=heap.poll();
+            long s=min1+min2;
+            sum=sum+s;
+            heap.offer(s);
+        }
+        return sum;
+    }
+}
