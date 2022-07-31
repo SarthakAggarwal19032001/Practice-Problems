@@ -1,0 +1,10 @@
+class Solution{
+    static List<Integer> get(int a,int b)
+    {
+        a=a^b^(b=a);
+        List<Integer>list=new ArrayList<>();
+        list.add(a);
+        list.add(b);
+        return list;
+    }
+}
