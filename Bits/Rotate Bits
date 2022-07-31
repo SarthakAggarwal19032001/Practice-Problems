@@ -1,0 +1,18 @@
+//gfg
+
+class Solution
+{
+   
+  ArrayList<Integer> rotate(int n, int d)
+  {
+      // your code here
+     ArrayList<Integer> al = new ArrayList<>();
+     d=d%16;
+    int bit = 16 - d;
+    int x = n << d | n >> bit;  
+    int y = n >> d | n << bit; 
+     al.add(x & 65535);  
+     al.add(y & 65535);
+     return al;
+  }
+}
